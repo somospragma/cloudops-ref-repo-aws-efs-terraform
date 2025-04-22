@@ -504,7 +504,7 @@ Y dos modos de rendimiento:
 - [x] Soporte para políticas de recursos
 - [x] Soporte para alta disponibilidad
 - [ ] Monitoreo y alertas (debe implementarse con el módulo CloudWatch)
-- [x] Revisión de seguridad completada
+- [x] Revisión de seguridad completada con análisis KICS
 
 ## Análisis de Seguridad
 
