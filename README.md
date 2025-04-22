@@ -514,7 +514,7 @@ Este módulo ha sido analizado con [KICS (Keeping Infrastructure as Code Secure)
 
 [![KICS](https://img.shields.io/badge/KICS-PASSED-success)](./security-reports/results.html)
 
-Puedes ver el reporte completo de seguridad [aquí](./security-reports/results.html).
+Puedes ver el reporte completo de seguridad en formato HTML [aquí](./security-reports/results.html) o consultar el [resumen detallado en formato Markdown](./security-reports/SECURITY-REPORT.md).
 
 #### Resumen de hallazgos
 
