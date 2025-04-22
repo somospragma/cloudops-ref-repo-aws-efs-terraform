@@ -1,0 +1,58 @@
+{
+	"kics_version": "development",
+	"files_scanned": 11,
+	"lines_scanned": 718,
+	"files_parsed": 11,
+	"lines_parsed": 686,
+	"lines_ignored": 32,
+	"files_failed_to_scan": 0,
+	"queries_total": 1088,
+	"queries_failed_to_execute": 0,
+	"queries_failed_to_compute_similarity_id": 0,
+	"scan_id": "console",
+	"severity_counters": {
+		"CRITICAL": 0,
+		"HIGH": 0,
+		"INFO": 0,
+		"LOW": 1,
+		"MEDIUM": 0,
+		"TRACE": 0
+	},
+	"total_counter": 1,
+	"total_bom_resources": 0,
+	"start": "2025-04-22T11:34:05.877244266-05:00",
+	"end": "2025-04-22T11:34:27.781071581-05:00",
+	"paths": [
+		"/home/farciniegas/Documents/Felipe/Work/Pragma/Chapter-CloudOps/repositorios/somospragma/modulos/cloudops-ref-repo-aws-efs-terraform"
+	],
+	"queries": [
+		{
+			"query_name": "IAM Access Analyzer Not Enabled",
+			"query_id": "e592a0c5-5bdb-414c-9066-5dba7cdea370",
+			"query_url": "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/accessanalyzer_analyzer",
+			"severity": "LOW",
+			"platform": "Terraform",
+			"cwe": "710",
+			"cloud_provider": "AWS",
+			"category": "Best Practices",
+			"experimental": false,
+			"description": "IAM Access Analyzer should be enabled and configured to continuously monitor resource permissions",
+			"description_id": "d03e85ae",
+			"files": [
+				{
+					"file_name": "../../Documents/Felipe/Work/Pragma/Chapter-CloudOps/repositorios/somospragma/modulos/cloudops-ref-repo-aws-efs-terraform/main.tf",
+					"similarity_id": "0a7d0464de505a54720d6002d14a22a32e6b20bb8189d444ab621d8ab838304f",
+					"line": 1,
+					"resource_type": "n/a",
+					"resource_name": "n/a",
+					"issue_type": "MissingAttribute",
+					"search_key": "resource",
+					"search_line": -1,
+					"search_value": "",
+					"expected_value": "'aws_accessanalyzer_analyzer' should be set",
+					"actual_value": "'aws_accessanalyzer_analyzer' is undefined"
+				}
+			]
+		}
+	]
+}

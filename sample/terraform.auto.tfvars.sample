@@ -1,0 +1,119 @@
+###############################################################
+# Variables Globales
+###############################################################
+
+aws_region        = "us-east-1"
+profile           = "profile"
+environment       = "dev"
+client            = "pragma"
+project           = "idp"
+
+common_tags = {
+  environment   = "dev"
+  project-name  = "Modulos Referencia"
+  cost-center   = "-"
+  owner         = "usuario@pragma.com.co"
+  area          = "CloudOps"
+  provisioned   = "terraform"
+  datatype      = "interno"
+}
+
+additional_tags = {
+  backup-policy = "daily"
+  service-tier  = "standard"
+}
+
+###############################################################
+# Variables EFS
+###############################################################
+
+efs_config = {
+  "app1" = {
+    description     = "EFS para la aplicación 1"
+    kms_key_id      = ""  # Usar la clave predeterminada
+    subnet_ids      = ["subnet-12345", "subnet-67890"]  # Múltiples subredes para alta disponibilidad
+    security_groups = ["sg-12345"]
+    
+    # Configuraciones de rendimiento y almacenamiento
+    performance_mode = "generalPurpose"  # generalPurpose o maxIO
+    throughput_mode  = "bursting"        # bursting o provisioned
+    
+    # Políticas de ciclo de vida
+    lifecycle_policy = [
+      {
+        transition_to_ia = "AFTER_30_DAYS"  # Mover datos no accedidos a almacenamiento IA después de 30 días
+      }
+    ]
+    
+    # Configuración de backup
+    enable_backup = true
+    backup_policy = {
+      schedule           = "cron(0 1 * * ? *)"  # Diariamente a la 1 AM
+      retention_in_days  = 30                   # Retención por 30 días
+    }
+    
+    # Política de recursos EFS
+    resource_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::123456789012:root"
+      },
+      "Action": [
+        "elasticfilesystem:ClientMount",
+        "elasticfilesystem:ClientWrite"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+    
+    access_points = [
+      {
+        name        = "ap1"
+        path        = "/path1"
+        owner_gid   = 1001
+        owner_uid   = 1001
+        permissions = 755
+        posix_user = {
+          gid = 1001
+          uid = 1001
+        }
+      }
+    ]
+    additional_tags = {
+      application = "app1"
+      data-classification = "internal"
+    }
+  },
+  
+  "app2" = {
+    description     = "EFS para la aplicación 2 con rendimiento aprovisionado"
+    kms_key_id      = ""  # Usar la clave predeterminada
+    subnet_ids      = ["subnet-12345"]
+    security_groups = ["sg-67890"]
+    
+    # Configuración de rendimiento aprovisionado
+    performance_mode = "maxIO"
+    throughput_mode  = "provisioned"
+    provisioned_throughput_in_mibps = 128  # 128 MiB/s de rendimiento aprovisionado
+    
+    access_points = [
+      {
+        name        = "ap1"
+        path        = "/path1"
+        owner_gid   = 1001
+        owner_uid   = 1001
+        permissions = 755
+      }
+    ]
+    additional_tags = {
+      application = "app2"
+      data-classification = "confidential"
+    }
+  }
+}

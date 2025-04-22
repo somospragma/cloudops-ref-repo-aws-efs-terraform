@@ -10,11 +10,11 @@ module "security_groups" {
 
   sg_config = [
     {
-      application   = "sm"
-      description   = "Security group for VPC Endpoint"
-      vpc_id        = data.aws_vpc.vpc_hefesto.id
-      service       = var.service
-      functionality = var.functionality
+      application   = "efs"
+      description   = "Security group for EFS"
+      vpc_id        = data.aws_vpc.vpc.id
+      service       = "efs"
+      functionality = "storage"
 
       ingress = [
         {
@@ -43,34 +43,60 @@ module "security_groups" {
   ]
 }
 
-
 module "efs" {
-  source = "./module/efs"
+  source = "../"
+  
+  providers = {
+    aws.project = aws.pra_idp_dev
+  }
 
   client      = var.client
-  service     = var.service
+  project     = var.project
   environment = var.environment
+  additional_tags = var.additional_tags
 
-efs_config = [
-  {
-    application_id  = var.project
-    kms_key_id      = "" #si esta vacio le configura aws/elasticfilesystem
-    subnet_id       = data.aws_subnet.private_subnet.id
-    security_groups = [module.security_groups.sg_info["${var.service}-sm-${var.functionality}"].sg_id]
-
-    access_points = [
-      {
-        name         = var.name
-        path         = var.path
-        owner_gid    = var.owner_gid
-        owner_uid    = var.owner_uid
-        permissions  = var.permissions
-        posix_user = {
-          gid = var.gid
-          uid = var.uid
+  efs_config = {
+    "app1" = {
+      description     = "EFS para la aplicación 1"
+      kms_key_id      = ""  # Usar la clave predeterminada
+      subnet_ids      = [data.aws_subnet.private_subnet.id]
+      security_groups = [module.security_groups.sg_info["efs-efs-storage"].sg_id]
+      
+      # Configuraciones de rendimiento y almacenamiento
+      performance_mode = "generalPurpose"
+      throughput_mode  = "bursting"
+      
+      # Políticas de ciclo de vida
+      lifecycle_policy = [
+        {
+          transition_to_ia = "AFTER_30_DAYS"
         }
+      ]
+      
+      # Configuración de backup
+      enable_backup = true
+      backup_policy = {
+        schedule           = "cron(0 1 * * ? *)"
+        retention_in_days  = 30
       }
-    ]
+      
+      access_points = [
+        {
+          name        = "ap1"
+          path        = "/path1"
+          owner_gid   = 1001
+          owner_uid   = 1001
+          permissions = 755
+          posix_user = {
+            gid = 1001
+            uid = 1001
+          }
+        }
+      ]
+      additional_tags = {
+        application = "app1"
+        data-classification = "internal"
+      }
+    }
   }
-  ]
 }
