@@ -1,7 +1,5 @@
 # **Módulo Terraform: cloudops-ref-repo-aws-efs-terraform**
 
-[![KICS](https://img.shields.io/badge/KICS-PASSED-success)](./security-reports/results.html)
-
 ## Descripción:
 
 Este módulo facilita la creación y gestión de recursos de Amazon Elastic File System (EFS) en AWS con todas las mejores prácticas de seguridad, nomenclatura y configuración según los estándares. Permite crear sistemas de archivos EFS con cifrado obligatorio, puntos de acceso personalizados, configuraciones de rendimiento, políticas de ciclo de vida, backup automático y políticas de recursos.
@@ -493,19 +491,6 @@ Y dos modos de rendimiento:
 >
 > Asegúrese de que el bucket S3 tenga el versionado habilitado y que la tabla DynamoDB tenga una clave primaria llamada `LockID`.
 
-## Lista de verificación de cumplimiento
-
-- [x] Nomenclatura de recursos conforme al estándar
-- [x] Etiquetas obligatorias aplicadas a todos los recursos
-- [x] Cifrado en reposo obligatorio
-- [x] Validaciones para garantizar configuraciones correctas
-- [x] Documentación sobre cómo configurar el acceso seguro
-- [x] Soporte para backup automático
-- [x] Soporte para políticas de recursos
-- [x] Soporte para alta disponibilidad
-- [ ] Monitoreo y alertas (debe implementarse con el módulo CloudWatch)
-- [x] Revisión de seguridad completada con análisis KICS
-
 ## Análisis de Seguridad
 
 Este módulo ha sido analizado con [KICS (Keeping Infrastructure as Code Secure)](https://kics.io/) para detectar posibles vulnerabilidades y problemas de seguridad.
@@ -527,4 +512,17 @@ Puedes ver el reporte completo de seguridad en formato HTML [aquí](./security-r
 
 El único hallazgo de severidad baja está relacionado con "IAM Access Analyzer Not Enabled", lo cual es esperado ya que este módulo no tiene como objetivo configurar IAM Access Analyzer.
 
-Este módulo ha sido desarrollado siguiendo los estándares de Pragma CloudOps, garantizando una implementación segura, escalable y optimizada que cumple con todas las políticas de la organización. Pragma CloudOps recomienda revisar este código con su equipo de infraestructura antes de implementarlo en producción.
+
+## Lista de verificación de cumplimiento
+
+- [x] Nomenclatura de recursos conforme al estándar
+- [x] Etiquetas obligatorias aplicadas a todos los recursos
+- [x] Cifrado en reposo obligatorio
+- [x] Validaciones para garantizar configuraciones correctas
+- [x] Documentación sobre cómo configurar el acceso seguro
+- [x] Soporte para backup automático
+- [x] Soporte para políticas de recursos
+- [x] Soporte para alta disponibilidad
+- [ ] Monitoreo y alertas (debe implementarse con el módulo CloudWatch)
+- [x] Revisión de seguridad completada con análisis KICS
+
