@@ -1,28 +1,30 @@
 # Changelog
 
-Todos los cambios notables en este proyecto serán documentados en este archivo.
+Todos los cambios notables de este módulo serán documentados en este archivo.
 
-El formato está basado en [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+El formato está basado en [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/),
 y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.0.0] - 2025-04-21
+## [Unreleased]
 
-### Añadido
-- Versión inicial del módulo de AWS Elastic File System (EFS)
-- Soporte para creación de múltiples sistemas de archivos EFS usando mapas de objetos
-- Soporte para puntos de acceso EFS con configuraciones personalizadas
-- Soporte para puntos de montaje en múltiples subredes para alta disponibilidad
-- Configuración de modos de rendimiento (generalPurpose/maxIO) y rendimiento (bursting/provisioned)
-- Políticas de ciclo de vida para gestión automática del almacenamiento
-- Backup automático integrado con AWS Backup
-- Políticas de recursos para control de acceso granular
-- Cifrado obligatorio mediante AWS KMS (clave predeterminada o personalizada)
-- Etiquetado consistente según estándares organizacionales
-- Validaciones de entrada para prevenir configuraciones incorrectas
-- Documentación completa con ejemplos de uso
-- Nomenclatura estandarizada con formato de guiones (-)
+## [1.0.0] - 2026-04-07
 
-### Cambiado
-- Estructura de variables mejorada para mayor flexibilidad y validación
-- Cambio de variable `service` a `project` para mantener consistencia con otros módulos
-- Cambio de `subnet_id` a `subnet_ids` para soportar múltiples puntos de montaje
+### Added
+- Implementación inicial del módulo EFS siguiendo las 26 reglas PC-IAC
+- Soporte para múltiples sistemas de archivos EFS con `for_each`
+- Cifrado en reposo obligatorio (PC-IAC-020)
+- Soporte para KMS keys personalizadas
+- Mount targets en múltiples subnets
+- Access points con configuración POSIX
+- Lifecycle policies (transition_to_ia, transition_to_archive, transition_to_primary_storage_class)
+- Protección de replicación configurable
+- Nomenclatura estándar: `{client}-{project}-{environment}-efs-{key}`
+- Ejemplo funcional en `sample/` con patrón de transformación (PC-IAC-026)
+
+### Removed
+- Recursos IAM (backup role) - violaban PC-IAC-023 (responsabilidad única)
+- Recursos de backup - deben gestionarse en un módulo separado
+
+### Security
+- Cifrado en reposo habilitado por defecto
+- Security Groups recibidos como input (no creados internamente)
