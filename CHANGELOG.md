@@ -7,6 +7,12 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/spec/v2.0.0.h
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-04-13
+
+### Changed
+- Agregado soporte para environment `prod` en la validación de variables
+- La validación de environment ahora acepta: dev, qa, pdn, prod
+
 ## [1.0.0] - 2026-04-07
 
 ### Added
